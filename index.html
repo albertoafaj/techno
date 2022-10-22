@@ -5,20 +5,49 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="./vue.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;1,700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;1,700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="style.css" />
     <title>Techno</title>
   </head>
   <body>
     <div id="app">
+      <section class="modal" v-if="produto">
+        <div class="modal-container">
+            <div class="modal-img">
+                <img :src="produto.img" :alt="produto.nome">
+            </div>
+            <div class="modal-data" >
+                <span class="modal-price">{{produto.preco}}</span>
+                <h2 class="modal-title">{{produto.nome}}</h2>
+                <p>{{produto.decricao}}</p>
+                <button class="modal-btn">Adicionar Item</button>
+
+            </div>
+            <div class="reviews">
+                <h2 class="reviews-subtitle">Avaliações</h2>
+                <ul>
+                    <li v-for="avaliacao in produto.reviews" class="review">
+                        <p class="description-review">{{avaliacao.descricao}}</p>
+                        <p class="user-review">{{avaliacao.nome}} | {{avaliacao.estrelas}} estrelas</p>
+                        
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+        
+    </section>
       <section class="products">
-        <div v-for="produto in produtos" :key="produto.id" class="product">
-          <img :src="produto.img" :alt="produto.nome" class="product-img" />
+        <div v-for="item in produtos" :key="item.id" @click="fetchProduct(item.id)" class="product">
+          <img :src="item.img" :alt="item.nome" class="product-img" />
           <div class="product_info">
-            <span class="product_price"> {{produto.preco}} </span>
-            <h2 class="product_title">{{produto.nome}}</h2>
+            <span class="product_price"> {{item.preco | priceNumber}} </span>
+            <h2 class="product_title">{{item.nome}}</h2>
           </div>
         </div>
       </section>
