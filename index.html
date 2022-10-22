@@ -16,6 +16,27 @@
   </head>
   <body>
     <div id="app">
+      <header class="header">
+        <img src="./assets/techno.svg" alt="techno" class="logo">
+        <div class="shopping-cart-menu">{{shoppingCartValue | priceNumber}} | {{shoppingCart.length}}</div>
+        <ul>
+          <li v-for="(item,index) in shoppingCart">
+            <p>{{item.nome}}</p>
+            <button @click="removeItem(index)">x</button>
+          </li>
+        </ul>
+
+      </header>
+    </section>
+      <section class="products">
+        <div v-for="item in produtos" :key="item.id" @click="openModal(item.id)" class="product">
+          <img :src="item.img" :alt="item.nome" class="product-img" />
+          <div class="product_info">
+            <span class="product_price"> {{item.preco | priceNumber}} </span>
+            <h2 class="product_title">{{item.nome}}</h2>
+          </div>
+        </div>
+      </section>
       <section class="modal" v-if="produto" @click="closeModal">
         <div class="modal-container">
           <div class="modal-img">
@@ -26,7 +47,8 @@
                 <span class="modal-price">{{produto.preco}}</span>
                 <h2 class="modal-title">{{produto.nome}}</h2>
                 <p>{{produto.decricao}}</p>
-                <button class="modal-btn">Adicionar Item</button>
+                <button v-if="produto.estoque > 0" class="modal-btn" @click="addItem">Adicionar Item</button>
+                <button v-else class="modal-btn esgotado" disabled>Produto Esgotado</button>
 
             </div>
             <div class="reviews">
@@ -41,17 +63,6 @@
 
             </div>
         </div>
-        
-    </section>
-      <section class="products">
-        <div v-for="item in produtos" :key="item.id" @click="openModal(item.id)" class="product">
-          <img :src="item.img" :alt="item.nome" class="product-img" />
-          <div class="product_info">
-            <span class="product_price"> {{item.preco | priceNumber}} </span>
-            <h2 class="product_title">{{item.nome}}</h2>
-          </div>
-        </div>
-      </section>
     </div>
   </body>
   <script src="app.js"></script>
