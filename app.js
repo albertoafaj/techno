@@ -55,10 +55,21 @@ const vm = new Vue({
         },
         removeItem() {
             this.shoppingCart.splice(id, 1)
+        },
+        checkLocalStorage() {
+            if (window.localStorage.shoppingCart) {
+                this.shoppingCart = JSON.parse(window.localStorage.shoppingCart)
+            }
         }
     },
     created() {
         this.fetchProdutos();
+        this.checkLocalStorage();
+    },
+    watch: {
+        shoppingCart() {
+            window.localStorage.shoppingCart = JSON.stringify(this.shoppingCart)
+        }
     }
 
 })
