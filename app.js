@@ -56,7 +56,7 @@ const vm = new Vue({
             this.shoppingCart.push({ id, nome, preco })
             this.alert(`${nome} adicionado ao carrinho`)
         },
-        removeItem() {
+        removeItem(id) {
             this.shoppingCart.splice(id, 1)
         },
         checkLocalStorage() {
@@ -71,13 +71,26 @@ const vm = new Vue({
                 this.alertActive = false;
 
             }, 1000)
+        },
+        router() {
+            const hash = document.location.hash;
+            console.log(hash)
+            if (hash)
+                this.fetchProduct(hash.replace("#", ""));
         }
+
     },
     created() {
         this.fetchProdutos();
         this.checkLocalStorage();
+        this.router();
     },
     watch: {
+        produto() {
+            document.title = this.produto || "Techno"
+            const hash = this.produto.id || ""
+            history.pushState(null, null, `#${hash}`)
+        },
         shoppingCart() {
             window.localStorage.shoppingCart = JSON.stringify(this.shoppingCart)
         }
