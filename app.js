@@ -2,10 +2,11 @@ const vm = new Vue({
     el: "#app",
     data: {
         produtos: [],
-        produto: null,
+        produto: false,
         shoppingCart: [],
         alertMsg: "Item adicionado",
         alertActive: false,
+        activeShoppingCart: false,
     },
     filters: {
         priceNumber(value) {
@@ -50,6 +51,11 @@ const vm = new Vue({
             if (target === currentTarget) this.produto = false;
 
         },
+        clickOutShoppingCart({ target, currentTarget }) {
+            if (target === currentTarget) this.activeShoppingCart = false;
+
+        },
+
         addItem() {
             const { id, nome, preco } = this.produto
             this.produto.estoque--;
@@ -74,7 +80,6 @@ const vm = new Vue({
         },
         router() {
             const hash = document.location.hash;
-            console.log(hash)
             if (hash)
                 this.fetchProduct(hash.replace("#", ""));
         }

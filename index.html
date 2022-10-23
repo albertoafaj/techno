@@ -17,19 +17,19 @@
   <body>
     <div id="app">
       <header class="header">
-        <img src="./assets/techno.svg" alt="techno" class="logo">
-        <div class="shopping-cart-menu">{{shoppingCartValue | priceNumber}} | {{shoppingCart.length}}</div>
-        <ul>
-          <li v-for="(item,index) in shoppingCart">
-            <p>{{item.nome}}</p>
-            <button @click="removeItem(index)">x</button>
-          </li>
-        </ul>
-
+        <img src="./assets/techno.svg" alt="techno" class="logo" />
+        <div class="shopping-cart-menu" @click="activeShoppingCart = true">
+          {{shoppingCartValue | priceNumber}} | {{shoppingCart.length}}
+        </div>
       </header>
-    </section>
+
       <section class="products">
-        <div v-for="item in produtos" :key="item.id" @click="openModal(item.id)" class="product">
+        <div
+          v-for="item in produtos"
+          :key="item.id"
+          @click="openModal(item.id)"
+          class="product"
+        >
           <img :src="item.img" :alt="item.nome" class="product-img" />
           <div class="product_info">
             <span class="product_price"> {{item.preco | priceNumber}} </span>
@@ -37,38 +37,81 @@
           </div>
         </div>
       </section>
+
       <section class="modal" v-if="produto" @click="closeModal">
         <div class="modal-container">
           <div class="modal-img">
-            <img :src="produto.img" :alt="produto.nome">
+            <img :src="produto.img" :alt="produto.nome" />
           </div>
-          <div class="modal-data" >
-              <button @click="produto = false" class="modal-close">x</button>
-                <span class="modal-price">{{produto.preco | priceNumber}}</span>
-                <h2 class="modal-title">{{produto.nome}}</h2>
-                <p>{{produto.decricao}}</p>
-                <button v-if="produto.estoque > 0" class="modal-btn" @click="addItem">Adicionar Item</button>
-                <button v-else class="modal-btn esgotado" disabled>Produto Esgotado</button>
-
-            </div>
-            <div class="reviews">
-                <h2 class="reviews-subtitle">Avaliações</h2>
-                <ul>
-                    <li v-for="avaliacao in produto.reviews" class="review">
-                        <p class="description-review">{{avaliacao.descricao}}</p>
-                        <p class="name-review">{{avaliacao.nome}} | {{avaliacao.estrelas}} estrelas</p>
-                        
-                    </li>
-                </ul>
-
-            </div>
-            <div class="alert" :class="{active: alertActive}">
-              <p class="alert-message">
-                {{alertMsg}}
-              </p>
-            </div>
+          <div class="modal-data">
+            <button @click="produto = false" class="modal-close">x</button>
+            <span class="modal-price">{{produto.preco | priceNumber}}</span>
+            <h2 class="modal-title">{{produto.nome}}</h2>
+            <p>{{produto.decricao}}</p>
+            <button
+              v-if="produto.estoque > 0"
+              class="modal-btn"
+              @click="addItem"
+            >
+              Adicionar Item
+            </button>
+            <button v-else class="modal-btn esgotado" disabled>
+              Produto Esgotado
+            </button>
+          </div>
+          <div class="reviews">
+            <h2 class="reviews-subtitle">Avaliações</h2>
+            <ul>
+              <li v-for="avaliacao in produto.reviews" class="review">
+                <p class="description-review">{{avaliacao.descricao}}</p>
+                <p class="name-review">
+                  {{avaliacao.nome}} | {{avaliacao.estrelas}} estrelas
+                </p>
+              </li>
+            </ul>
+          </div>
         </div>
+      </section>
+
+      <section
+        class="shopping-cart-modal"
+        :class="{active: activeShoppingCart}"
+        @click="clickOutShoppingCart"
+      >
+        <div class="shopping-cart-container">
+          <button
+            class="shopping-cart-close"
+            @click="activeShoppingCart = false"
+          >
+            X
+          </button>
+          <h2 class="shopping-cart-title">Carrinho</h2>
+          <div v-if="shoppingCart.length > 0">
+            <ul class="shopping-cart-list">
+              <li
+                v-for="(item , index) in shoppingCart"
+                class="shopping-cart-item"
+              >
+                <p>{{item.nome}}</p>
+                <p class="shopping-cart-price">{{item.preco | priceNumber}}</p>
+                <button class="shopping-cart-close" @click="removeItem(index)">
+                  X
+                </button>
+              </li>
+            </ul>
+            <p class="shopping-cart-total">
+              {{shoppingCartValue | priceNumber}}
+            </p>
+            <button class="shopping-cart-finalize">Finalizar</button>
+          </div>
+          <p v-esle>O carrinho está vazio</p>
+        </div>
+      </section>
+
+      <div class="alert" :class="{active: alertActive}">
+        <p class="alert-message">{{alertMsg}}</p>
+      </div>
     </div>
+    <script src="app.js"></script>
   </body>
-  <script src="app.js"></script>
 </html>
