@@ -326,3 +326,58 @@ body {
   border: none;
   font-family: "Noto Serif";
 }
+
+/* RESPONSIVE */
+
+@media screen and (max-width: 900px) {
+  #app {
+    padding: 0 10px;
+  }
+  .products {
+    margin-top: 40px;
+  }
+  .product {
+    flex-direction: column;
+    align-items: flex-start;
+    max-width: 300px;
+    margin: 30px auto;
+  }
+  .product-info {
+    padding: 20px;
+  }
+  .product-img {
+    max-width: 100%;
+  }
+  .product-title {
+    font-size: 1.5rem;
+  }
+  .modal {
+    padding: 10px;
+  }
+  .modal-container {
+    grid-gap: 20px;
+    background: #ffffff;
+    padding: 10px 0;
+  }
+  .modal-img {
+    grid-row: 2;
+  }
+  .modal-img img {
+    width: 100%;
+    max-width: initial;
+  }
+  .modal-data {
+    grid-column: 1;
+    padding: 10px;
+  }
+  .modal-btn {
+    margin-top: 20px;
+  }
+  .reviews {
+    grid-column: 1;
+    padding: 10px;
+  }
+  .shopping-cart-modal {
+    padding: 10px;
+  }
+}
